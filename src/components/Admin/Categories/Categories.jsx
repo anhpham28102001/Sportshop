@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 
 function Categories(props) {
-  const categoriesColletionRef = collection(db, "categories");
+  const categoriesCollectionRef = collection(db, "categories");
   const [nameCategory, setNameCategory] = useState("");
   const [categories, setCategories] = useState([]);
   const [update, setUpdate] = useState(false);
@@ -19,7 +19,7 @@ function Categories(props) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const querySnapshot = await getDocs(categoriesColletionRef);
+      const querySnapshot = await getDocs(categoriesCollectionRef);
       const categoriesData = [];
       querySnapshot.forEach((doc) => {
         categoriesData.push({ id: doc.id, ...doc.data() });
@@ -31,7 +31,7 @@ function Categories(props) {
 
   const addCategory = async () => {
     try {
-      await addDoc(categoriesColletionRef, {
+      await addDoc(categoriesCollectionRef, {
         nameCategory: nameCategory,
       });
       setNameCategory("");

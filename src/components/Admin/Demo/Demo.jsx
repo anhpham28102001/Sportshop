@@ -17,9 +17,9 @@ function Demo(props) {
       <BrowserRouter>
         <Header></Header>
 
-        <div className="container-fluid">
+        <div className="container-fluid navbar-container">
           <div className="navcontainer">
-            <nav className="nav">
+            <nav className="nav-admin">
               <div className="nav-upper-options">
                 {DataLink.map((element, index) => (
                   // <div className={element.id == id ? "option1 nav-option" : "option2 nav-option"} onClick={() => setId(element.id)}>

@@ -13,7 +13,7 @@ p  {
     --background-color1: #fafaff;
     --background-color2: #ffffff;
     --background-color3: #ededed;
-    --background-color4: #cad7fda4;
+    // --background-color4: #cad7fda4;
     --primary-color: #e34141;
     --secondary-color: #7d0000;
     --Border-color: #ce2b2b;
@@ -26,7 +26,7 @@ body {
   overflow-x: hidden;
 }
 
-.container-fluid {
+.navbar-container {
   display: flex;
   width: 100%;
   // position: relative;
@@ -68,7 +68,7 @@ body {
   flex-wrap: wrap;
   // gap: 30px !important;
 }
-.nav {
+.nav-admin {
   min-height: 91vh;
   width: 250px;
   background-color: var(--background-color2);
@@ -340,7 +340,7 @@ body {
     top: 0;
     left: -100vw;
   }
-  .nav {
+  .nav-admin {
     width: 100%;
     position: absolute;
   }
@@ -490,7 +490,7 @@ body {
     top: 0;
     left: -100vw;
   }
-  .nav {
+  .nav-admin {
     width: 100%;
     position: absolute;
   }

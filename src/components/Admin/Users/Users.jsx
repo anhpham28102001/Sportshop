@@ -1,7 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import "./Users.scss";
 
+import { db } from "../../../firebase";
+import { collection, addDoc, getDocs, doc } from "firebase/firestore";
+
 function Users(props) {
+  const usersCollectionRef = collection(db, "users");
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const querySnapshot = await getDocs(usersCollectionRef);
+      const usersData = [];
+      querySnapshot.forEach((doc) => {
+        usersData.push({ id: doc.id, ...doc.data() });
+      });
+      setUsers(usersData);
+    };
+    fetchData();
+  }, []);
   return (
     <div className="report-container">
       <div className="report-header">
@@ -60,31 +78,39 @@ function Users(props) {
         <thead>
           <tr>
             <th scope="col">User ID</th>
-            <th scope="col">User Lastname</th>
-            <th scope="col">User Name</th>
+            <th scope="col">User First Name</th>
+            <th scope="col">User Last Name</th>
             <th scope="col">User Email</th>
-            <th scope="col">User Phone Number</th>
+            {/* <th scope="col">User Phone Number</th> */}
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">US1</th>
-            <td>Pham</td>
-            <td>Anh</td>
-            <td>null</td>
-            <td>+84 12234523344</td>
-            <td>
-              {" "}
-              <button type="button" class="btn btn-outline-danger">
-                <i class="fa-solid fa-trash"></i>
-              </button>
-              <button type="button" class="btn btn-outline-warning">
-                <i class="fa-solid fa-pen-fancy"></i>
-              </button>
-            </td>
-          </tr>
-          <tr>
+          {users.map((user, index) => (
+            <tr key={index}>
+              <th> {index + 1}</th>
+              <td>{user.firstNameUser}</td>
+              <td>{user.lastNameUser}</td>
+              <td>{user.email}</td>
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-outline-danger"
+                  // onClick={() => deleteProduct(product.id)}
+                >
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-warning"
+                  // onClick={() => editProduct(product.id)}
+                >
+                  <i className="fa-solid fa-pen-fancy"></i>
+                </button>
+              </td>
+            </tr>
+          ))}
+          {/* <tr>
             <th scope="row">US2</th>
             <td>Hoang</td>
             <td>Hung</td>
@@ -98,7 +124,7 @@ function Users(props) {
                 <i class="fa-solid fa-pen-fancy"></i>
               </button>
             </td>
-          </tr>
+          </tr> */}
         </tbody>
       </table>
     </div>

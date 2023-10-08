@@ -4,7 +4,7 @@ import "./Header.scss";
 function Header(props) {
   return (
     <>
-      <header>
+      <header class="admin-header">
         <div class="logosec">
           <div class="logo">SportShop</div>
           <img

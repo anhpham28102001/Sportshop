@@ -51,46 +51,52 @@ function Categories(props) {
     }
   };
 
+  // const editCategory = (id) => {
+  //   const updatedCategory = categories.find((category) => category.id == id);
+  //   setEditedCategory(updatedCategory.nameCategory);
+  //   setCurrentCategoryId(id);
+  // };
   const editCategory = (id) => {
-    const updatedCategory = categories.find((category) => category.id == id);
-    setEditedCategory(updatedCategory.nameCategory);
-    setCurrentCategoryId(id);
+    const updatedCategory = categories.find((category) => category.id === id);
+    if (updatedCategory) {
+      setEditedCategory(updatedCategory.nameCategory);
+      setCurrentCategoryId(id);
+    } else {
+      console.error(`Category with id ${id} not found.`);
+    }
   };
 
+  // const updateCategory = async () => {
+  //   try {
+  //     const categoryDocRef = doc(db, "categories", currentCategoryId);
+  //     await updateDoc(categoryDocRef, {
+  //       nameCategory: editedCategory,
+  //     });
+  //     setCurrentCategoryId(null);
+  //     setUpdate(!update);
+  //   } catch (error) {
+  //     console.error("Error updating category: " + error);
+  //   }
+  // };
   const updateCategory = async () => {
     try {
+      if (currentCategoryId === null) {
+        console.error("No category selected for update.");
+        return;
+      }
+  
       const categoryDocRef = doc(db, "categories", currentCategoryId);
       await updateDoc(categoryDocRef, {
         nameCategory: editedCategory,
       });
+  
       setCurrentCategoryId(null);
+      setEditedCategory("");
       setUpdate(!update);
     } catch (error) {
       console.error("Error updating category: " + error);
     }
   };
-
-  // const handleEditClick = (id, name) => {
-  //   setEditMode(true); // Bật chế độ chỉnh sửa
-  //   setCurrentCategoryId(id); // Lưu ID của danh mục đang được chỉnh sửa
-  //   setEditedCategory(name); // Đặt giá trị chỉnh sửa ban đầu
-  // };
-
-  // const handleSaveEdit = async () => {
-  //   try {
-  //     // const updatedCategory = categories.find(
-  //     //   (category) => category.id === currentCategoryId
-  //     // );
-  //     const categoryDocRef = doc(db, "categories", currentCategoryId);
-  //     await updateDoc(categoryDocRef, {
-  //       nameCategory: editedCategory,
-  //     });
-  //     setEditMode(false); // Tắt chế độ chỉnh sửa
-  //     setCurrentCategoryId(null); // Đặt lại ID danh mục đang được chỉnh sửa
-  //   } catch (error) {
-  //     console.error("Error updating category: " + error);
-  //   }
-  // };
 
   return (
     <>

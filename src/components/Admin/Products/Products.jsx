@@ -5,6 +5,8 @@ import { storage } from "../../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db } from "../../../firebase";
 import { v4 as uuidv4 } from "uuid";
+// import Pagination from \"react-js-pagination\";
+// import TableRow from \"react-js-pagination\";
 import {
   collection,
   addDoc,
@@ -13,6 +15,7 @@ import {
   deleteDoc,
   updateDoc,
 } from "firebase/firestore";
+import "./Products.scss";
 
 function Products(props) {
   const productsCollectionRef = collection(db, "products");
@@ -29,6 +32,7 @@ function Products(props) {
   const [imgUpload, setImgUpload] = useState(null);
   const [previewImg, setPreviewImg] = useState(null);
   const [products, setProducts] = useState([]);
+  const [description, setDescription] = useState("");
 
   const [editedProduct, setEditedProduct] = useState("");
   const [currentProductId, setCurrentProductId] = useState(null);
@@ -66,8 +70,8 @@ function Products(props) {
 
   const addProduct = async (e) => {
     e.preventDefault();
-    if(!imgUpload) {
-        alert("Vui long chon anh ?");
+    if (!imgUpload) {
+      alert("Vui long chon anh ?");
     }
     try {
       const imageRef = ref(storage, `images/${uuidv4()}_${imgUpload.name}`);
@@ -81,12 +85,14 @@ function Products(props) {
         newPrice: newPrice,
         quantity: quantity,
         imgURl: downloadURL,
+        description: description,
       });
       setNameProduct("");
       setOldPrice("");
       setNewPrice("");
       setPreviewImg(null);
       setQuantity("");
+      setDescription("");
       setImgUpload(null);
       setUpdate(!update);
     } catch (error) {
@@ -184,7 +190,8 @@ function Products(props) {
                         placeholder="Enter product name"
                         onChange={(e) => setNameProduct(e.target.value)}
                       />
-                      <label htmlFor="product-name"></label> Category <br></br>
+                      <label htmlFor="product-category"></label> Category{" "}
+                      <br></br>
                       <select
                         name="lang"
                         id="lang-select"
@@ -203,32 +210,43 @@ function Products(props) {
                       <option value="csharp">Men clothes</option>
                       <option value="cpp">Women clothes</option> */}
                       </select>
-                      <label htmlFor="product-name">Old Price</label>
+                      <label htmlFor="product-oprice">Old Price</label>
                       <input
                         type="number"
-                        id="product-name"
+                        id="product-oprice"
                         value={oldPrice}
                         className="add-input"
                         placeholder="Enter product old price"
                         onChange={(e) => setOldPrice(e.target.value)}
                       />
-                      <label htmlFor="product-name">New Price</label>
+                      <label htmlFor="product-nprice">New Price</label>
                       <input
                         type="number"
-                        id="product-name"
+                        id="product-nprice"
                         value={newPrice}
                         className="add-input"
                         placeholder="Enter product new price"
                         onChange={(e) => setNewPrice(e.target.value)}
                       />
-                      <label htmlFor="product-name">Number of products</label>
+                      <label htmlFor="product-quantity">
+                        Number of products
+                      </label>
                       <input
                         type="number"
-                        id="product-name"
+                        id="product-quantity"
                         value={quantity}
                         className="add-input"
                         placeholder="Enter product quantity"
                         onChange={(e) => setQuantity(e.target.value)}
+                      />
+                      <label htmlFor="product-des">Description</label>
+                      <input
+                        type="text"
+                        id="product-des"
+                        value={description}
+                        className="add-input"
+                        placeholder="Enter product description"
+                        onChange={(e) => setDescription(e.target.value)}
                       />
                     </div>
                   </div>
@@ -248,7 +266,7 @@ function Products(props) {
                       </div>
                       <input
                         type="file"
-                        accept=".jpg, .png"
+                        // accept=".jpg, .png"
                         multiple
                         id="product-picture"
                         className="add-input"
@@ -291,11 +309,11 @@ function Products(props) {
           {products.map((product, index) => (
             <tr key={index}>
               <th> {index + 1}</th>
-              <td>
+              <td className="product-img">
                 <img src={product.imgURl} alt="" width="50px" />
               </td>
               <td>{product.categoryId}</td>
-              <td>{product.nameProduct}</td>
+              <td className="product-name">{product.nameProduct}</td>
               <td>{product.oldPrice}</td>
               <td>{product.newPrice}</td>
               <td>{product.quantity}</td>

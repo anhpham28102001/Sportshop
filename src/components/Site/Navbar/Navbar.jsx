@@ -40,11 +40,10 @@ function Navbar({ user, handleSetUser }) {
           <div className="dangky">
             <li>Kiểm tra đơn hàng</li>
             {user ? (
-              <>
+              <div className="logout-container">
                 <div>{user.email}</div>
-                <button onClick={handleLogOut}>Logout</button>
-                <Link to={"/login"}>dangnhap</Link>
-              </>
+                <button onClick={handleLogOut}>Đăng xuất</button>
+              </div>
             ) : (
               <>
                 <li>
@@ -118,7 +117,7 @@ function Navbar({ user, handleSetUser }) {
       </header>
       <div class="header-bottom">
         <div className="container">
-          <ul class="nav nav-pills bottom-nav">
+          {/* <ul class="nav nav-pills bottom-nav">
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#">
                 Trang chủ
@@ -154,7 +153,56 @@ function Navbar({ user, handleSetUser }) {
                 </div>
               </a>
             </li>
-          </ul>
+          </ul> */}
+          <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+              <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#">
+                    Trang chủ
+                  </a>
+                </li>
+                <ul class="navbar-nav">
+                  <li class="nav-item dropdown">
+                    <Link
+                      to="/"
+                      class="nav-link dropdown-toggle"
+                      aria-current="page"
+                      href="#"
+                      id="navbarDarkDropdownMenuLink"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      {" "}
+                      ĐỒ THỂ THAO NAM{" "}
+                    </Link>
+                    <ul
+                      class="dropdown-menu "
+                      aria-labelledby="navbarDarkDropdownMenuLink"
+                    >
+                      <li>
+                        {}
+                        <a class="dropdown-item" href="#">
+                          Áo thể thao nam
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          Quần thể thao nam
+                        </a>
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          Bộ đồ thể thao nam
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
         </div>
       </div>
     </>

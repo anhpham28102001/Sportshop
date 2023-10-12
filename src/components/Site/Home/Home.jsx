@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
+import Navbar from "../Navbar/Navbar";
+import { useNavigate } from "react-router-dom";
 
-function Main(props) {
+
+
+function Main({user, handleSetUser}) {
+  const navigate = useNavigate();
+
   const [products, setProducts] = useState([
     {
       id: 1,
@@ -32,12 +38,24 @@ function Main(props) {
       setWindowWidth(window.innerWidth);
     };
 
+    
+
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      if (user.role == 0) {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
+    }
+  }, [user]);
 
   // Hàm tính toán số lượng sản phẩm hiển thị dựa trên chiều rộng của cửa sổ
   const getNumOfDisplayedProducts = () => {
@@ -76,6 +94,7 @@ function Main(props) {
   }, [products.length]);
   return (
     <>
+    <Navbar user={user} handleSetUser={handleSetUser}></Navbar>
       <main>
         <div class="container-fluid">
           <div

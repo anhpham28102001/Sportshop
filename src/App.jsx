@@ -5,8 +5,8 @@ import DemoUser from "./components/Site/DemoUser/DemoUser";
 
 function App() {
   // const [loginAdmin, setLoginAdmin] = useState(false);
-  return <Demo></Demo>;
-  // <DemoUser setLoginAdmin={setLoginAdmin}></DemoUser>;
+  return <DemoUser></DemoUser>;
+  // <Demo></Demo>;
 }
 
 export default App;

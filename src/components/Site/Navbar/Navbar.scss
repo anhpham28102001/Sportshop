@@ -113,7 +113,7 @@
     position: relative;
 }
 .header-bottom {
-  background-color: #f72b3f;
+  background-color: #f72b3f !important;
 }
 
 .logo img {
@@ -180,7 +180,13 @@
       color: red;
     }
   }
-
+.logout-container {
+display: flex;
+gap: 10px;
+}
+.logout-container button{
+  color: #f50920;
+}
 
   @media screen and (min-width:741px) and (max-width:1024px) {
   

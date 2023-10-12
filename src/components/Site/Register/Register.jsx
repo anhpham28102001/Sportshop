@@ -6,6 +6,7 @@ import { auth } from "../../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { signInWithPopup } from "firebase/auth";
 import { googleProvider } from "../../../firebase";
+import Navbar from "../Navbar/Navbar";
 
 import { useNavigate } from "react-router-dom";
 import { db } from "../../../firebase";
@@ -108,103 +109,106 @@ function Register({ user, handleSetUser }) {
   }, []);
 
   return (
-    <div className="container">
-      <div className="page-login">
-        <div className="login-header">
-          <h3 className="text-center">Đăng ký tài khoản</h3>
-        </div>
-        <div className="login">
-          <div className="social-login text-center">
-            <a href="./" className="facebook-login">
-              <img
-                width="129px"
-                height="37px"
-                alt="facebook-login-button"
-                src="//bizweb.dktcdn.net/assets/admin/images/login/fb-btn.svg"
-              />
-            </a>
-            <a className="google-login" onClick={signInWithGoogle}>
-              <img
-                width="129px"
-                height="37px"
-                alt="google-login-button"
-                src="//bizweb.dktcdn.net/assets/admin/images/login/gp-btn.svg"
-              />
-            </a>
+    <>
+      <Navbar user={user} handleSetUser={handleSetUser}></Navbar>
+      <div className="container">
+        <div className="page-login">
+          <div className="login-header">
+            <h3 className="text-center">Đăng ký tài khoản</h3>
           </div>
-          <div className="form-login ">
-            <div className="form-group-register">
-              <label htmlFor="customer-email" className="p-dam">
-                Họ
-                <span class="required">*</span>
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="customer-surname"
-                onChange={(e) => setFirstNameUser(e.target.value)}
-              />
+          <div className="login">
+            <div className="social-login text-center">
+              <a href="./" className="facebook-login">
+                <img
+                  width="129px"
+                  height="37px"
+                  alt="facebook-login-button"
+                  src="//bizweb.dktcdn.net/assets/admin/images/login/fb-btn.svg"
+                />
+              </a>
+              <a className="google-login" onClick={signInWithGoogle}>
+                <img
+                  width="129px"
+                  height="37px"
+                  alt="google-login-button"
+                  src="//bizweb.dktcdn.net/assets/admin/images/login/gp-btn.svg"
+                />
+              </a>
             </div>
-            <div className="form-group-register">
-              <label htmlFor="customer-email" className="p-dam">
-                Tên
-                <span class="required">*</span>
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="customer-name"
-                onChange={(e) => setLastNameUser(e.target.value)}
-              />
-            </div>
-            <div className="form-group-register">
-              <label htmlFor="customer-email" className="p-dam">
-                Email
-                <span class="required">*</span>
-              </label>
-              <input
-                type="email"
-                className="form-control"
-                id="customer-email"
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div className="form-group-register">
-              <label htmlFor="customer-password" className="p-dam">
-                Mật khẩu
-                <span class="required">*</span>
-              </label>
-              <input
-                type="password"
-                className="form-control"
-                id="customer-password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
+            <div className="form-login ">
+              <div className="form-group-register">
+                <label htmlFor="customer-email" className="p-dam">
+                  Họ
+                  <span class="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="customer-surname"
+                  onChange={(e) => setFirstNameUser(e.target.value)}
+                />
+              </div>
+              <div className="form-group-register">
+                <label htmlFor="customer-email" className="p-dam">
+                  Tên
+                  <span class="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="customer-name"
+                  onChange={(e) => setLastNameUser(e.target.value)}
+                />
+              </div>
+              <div className="form-group-register">
+                <label htmlFor="customer-email" className="p-dam">
+                  Email
+                  <span class="required">*</span>
+                </label>
+                <input
+                  type="email"
+                  className="form-control"
+                  id="customer-email"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className="form-group-register">
+                <label htmlFor="customer-password" className="p-dam">
+                  Mật khẩu
+                  <span class="required">*</span>
+                </label>
+                <input
+                  type="password"
+                  className="form-control"
+                  id="customer-password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="text-center register-button register-option">
-          <button
-            type="button"
-            class="btn btn-outline-danger"
-            onClick={handleRegister}
-          >
-            ĐĂNG KÝ
-          </button>
-          <div>
-            <Link
-              as={Link}
-              to="/login"
-              class="login-link"
-              aria-current="page"
-              href="#"
+          <div className="text-center register-button register-option">
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              onClick={handleRegister}
             >
-              Đăng nhập
-            </Link>
+              ĐĂNG KÝ
+            </button>
+            <div>
+              <Link
+                as={Link}
+                to="/login"
+                class="login-link"
+                aria-current="page"
+                href="#"
+              >
+                Đăng nhập
+              </Link>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../../../firebase";
-import { Link } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import Header from "../Header/Header";
+import { DataLink } from "../Navbar/DataLink";
 import {
   collection,
   addDoc,
@@ -10,17 +11,31 @@ import {
   deleteDoc,
   updateDoc,
 } from "firebase/firestore";
-import { DataLink } from "../Navbar/DataLink";
-import { Button, Checkbox, Form, Input } from "antd";
 
-function Categories(props) {
+function Subcategories(props) {
+  const subCategoriesCollectionRef = collection(db, "subCategories");
   const categoriesCollectionRef = collection(db, "categories");
-  const [nameCategory, setNameCategory] = useState("");
   const [categories, setCategories] = useState([]);
+  const [categoryId, setCategoryID] = useState(null);
+
+  const [nameSubCategory, setNameSubCategory] = useState("");
+  const [subCategories, setSubCategories] = useState([]);
   const [update, setUpdate] = useState(false);
-  const [editedCategory, setEditedCategory] = useState("");
-  const [currentCategoryId, setCurrentCategoryId] = useState(null);
+  const [editedSubCategory, setEditedSubCategory] = useState("");
+  const [currentSubCategoryId, setCurrentSubCategoryId] = useState(null);
   const [id, setId] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const querySnapshot = await getDocs(subCategoriesCollectionRef);
+      const subCategoriesData = [];
+      querySnapshot.forEach((doc) => {
+        subCategoriesData.push({ id: doc.id, ...doc.data() });
+      });
+      setSubCategories(subCategoriesData);
+    };
+    fetchData();
+  }, [update]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,70 +47,66 @@ function Categories(props) {
       setCategories(categoriesData);
     };
     fetchData();
-  }, [update]);
+  }, []);
 
-  const addCategory = async () => {
+  const addSubCategory = async () => {
     try {
-      await addDoc(categoriesCollectionRef, {
-        nameCategory: nameCategory,
+      await addDoc(subCategoriesCollectionRef, {
+        nameSubCategory: nameSubCategory,
+        categoryId: categoryId,
       });
-      setNameCategory("");
+      setNameSubCategory("");
       setUpdate(!update);
     } catch (error) {
-      console.error("Error adding category: " + error);
+      console.error("Error adding sub-category: " + error);
     }
   };
 
-  const deleteCategory = async (id) => {
+  const deleteSubCategory = async (id) => {
     try {
-      const categoryDocRef = doc(db, "categories", id);
-      await deleteDoc(categoryDocRef);
+      const subCategoryDocRef = doc(db, "subCategories", id);
+      await deleteDoc(subCategoryDocRef);
       setUpdate(!update);
     } catch (error) {
-      console.error("Error deleting category: " + error);
+      console.error("Error deleting sub-category: " + error);
     }
   };
 
-  const editCategory = (id) => {
-    const updatedCategory = categories.find((category) => category.id === id);
+  const editSubCategory = (id) => {
+    const updatedCategory = subCategories.find(
+      (category) => category.id === id
+    );
     if (updatedCategory) {
-      setEditedCategory(updatedCategory.nameCategory);
-      setCurrentCategoryId(id);
+      setEditedSubCategory(updatedCategory.nameSubCategory);
+      setCurrentSubCategoryId(id);
     } else {
       console.error(`Category with id ${id} not found.`);
     }
   };
+
   const updateCategory = async () => {
     try {
-      if (currentCategoryId === null) {
+      if (currentSubCategoryId === null) {
         console.error("No category selected for update.");
         return;
       }
 
-      const categoryDocRef = doc(db, "categories", currentCategoryId);
+      const categoryDocRef = doc(db, "categories", currentSubCategoryId);
       await updateDoc(categoryDocRef, {
-        nameCategory: editedCategory,
+        nameSubCategory: editedSubCategory,
       });
 
-      setCurrentCategoryId(null);
-      setEditedCategory("");
+      setCurrentSubCategoryId(null);
+      setEditedSubCategory("");
       setUpdate(!update);
     } catch (error) {
       console.error("Error updating category: " + error);
     }
   };
-  const onFinish = (values) => {
-    console.log("Success:", values);
-  };
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
 
   return (
     <>
-      {/* <Button></Button> */}
       <Header></Header>
-
       <div className="container-fluid navbar-container">
         <div className="navcontainer">
           <nav className="nav-admin">
@@ -120,28 +131,28 @@ function Categories(props) {
         </div>
         <div className="report-container">
           <div className="report-header">
-            <h1 className="recent-Articles">Categories</h1>
+            <h1 className="recent-Articles">Sub-Categories</h1>
             <button
               type="button"
               class="btn btn-primary"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
             >
-              Add Categories
+              Add Sub-Categories
             </button>
 
             <div
               class="modal fade"
               id="exampleModal"
               tabindex="-1"
-              aria-labelledby="addcategories"
+              aria-labelledby="addsubcategories"
               aria-hidden="true"
             >
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="addcategories">
-                      Add Categories
+                    <h5 class="modal-title" id="addsubcategories">
+                      Add Sub Categories
                     </h5>
                     <button
                       type="button"
@@ -150,17 +161,33 @@ function Categories(props) {
                       aria-label="Close"
                     ></button>
                   </div>
-                  <div class="modal-body">
-                    <label htmlFor="Categoryname">Category Name</label>{" "}
-                    <br></br>
+                  <div class="modal-body input-container">
+                    <label htmlFor="Categoryname">Sub-Category Name</label>{" "}
                     <input
                       type="text"
-                      value={nameCategory}
+                      value={nameSubCategory}
                       id="categoryname"
                       className="add-input"
                       placeholder="Enter category name"
-                      onChange={(e) => setNameCategory(e.target.value)}
+                      onChange={(e) => setNameSubCategory(e.target.value)}
                     />
+                    <label htmlFor="product-category"></label> Category{" "}
+                    <br></br>
+                    <select
+                      name="lang"
+                      id="lang-select"
+                      className="option-category"
+                      onChange={(e) => setCategoryID(e.target.value)}
+                    >
+                      <option disabled selected>
+                        Choose category
+                      </option>
+                      {categories.map((category, index) => (
+                        <option value={category.nameCategory}>
+                          {category.nameCategory}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                   <div class="modal-footer">
                     <button
@@ -174,7 +201,7 @@ function Categories(props) {
                       type="button"
                       class="btn btn-primary"
                       data-bs-dismiss="modal"
-                      onClick={addCategory}
+                      onClick={addSubCategory}
                     >
                       Save changes
                     </button>
@@ -187,38 +214,39 @@ function Categories(props) {
             <thead>
               <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Category Name</th>
+                <th scope="col">Sub-Category Name</th>
+                <th scope="col">Category</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
-              {categories.map((category, index) => (
+              {subCategories.map((subCategory, index) => (
                 <tr key={index}>
                   <th>{index + 1}</th>
-                  {/* <td>{category.nameCategory}</td> */}
                   <td>
-                    {currentCategoryId === category.id ? (
+                    {currentSubCategoryId === subCategory.id ? (
                       <input
                         type="text"
-                        value={editedCategory}
-                        onChange={(e) => setEditedCategory(e.target.value)}
+                        value={editedSubCategory}
+                        onChange={(e) => setEditedSubCategory(e.target.value)}
                       />
                     ) : (
-                      category.nameCategory
+                      subCategory.nameSubCategory
                     )}
                   </td>
+                  <td>{subCategory.categoryId}</td>
 
                   <td className="status-icon">
                     <button
                       type="button"
                       class="btn btn-outline-danger"
-                      onClick={() => deleteCategory(category.id)}
+                      onClick={() => deleteSubCategory(subCategory.id)}
                     >
                       <i class="fa-solid fa-trash"></i>
                     </button>
 
                     {/* <i class="fa-solid fa-pen-fancy"></i> */}
-                    {currentCategoryId === category.id ? (
+                    {currentSubCategoryId === subCategory.id ? (
                       <button
                         type="button"
                         class="btn btn-outline-success"
@@ -230,7 +258,7 @@ function Categories(props) {
                       <button
                         type="button"
                         class="btn btn-outline-warning"
-                        onClick={() => editCategory(category.id)}
+                        onClick={() => editSubCategory(subCategory.id)}
                       >
                         <i className="fa-solid fa-pen-fancy"></i>
                       </button>
@@ -246,4 +274,4 @@ function Categories(props) {
   );
 }
 
-export default Categories;
+export default Subcategories;

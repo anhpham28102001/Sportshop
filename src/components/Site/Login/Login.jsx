@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { db } from "../../../firebase";
 import { collection, addDoc, getDocs, doc } from "firebase/firestore";
+import Navbar from "../Navbar/Navbar";
 
 import "./Login.scss";
 
@@ -15,26 +16,6 @@ function Login({ setLoginAdmin, user, handleSetUser }) {
 
   const usersCollectionRef = collection(db, "users");
   const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    if (user) {
-      if (user.role == 0) {
-        navigate("/admin");
-      } else {
-        navigate("/");
-      }
-    }
-  }, [user]);
-
-  // getDocs(query)
-  //   .then((querySnapshot) => {
-  //     querySnapshot.forEach((doc) => {
-  //       console.log("Dữ liệu của người dùng:", doc.data());
-  //     });
-  //   })
-  //   .catch((error) => {
-  //     console.error("Lỗi khi tìm kiếm dữ liệu:", error);
-  //   });
 
   const signInWithGoogle = async () => {
     console.log("object");
@@ -77,6 +58,7 @@ function Login({ setLoginAdmin, user, handleSetUser }) {
             ussera = itemUser;
           }
         });
+        navigate("/");
 
         console.log(user);
       })
@@ -86,81 +68,84 @@ function Login({ setLoginAdmin, user, handleSetUser }) {
   };
 
   return (
-    <div className="container">
-      <div className="page-login">
-        <div className="login-header">
-          <h3 className="text-center">Đăng nhập tài khoản</h3>
-        </div>
-        <div className="login">
-          <div className="social-login text-center">
-            <button className="facebook-login">
-              <img
-                alt="facebook-login-button"
-                src="//bizweb.dktcdn.net/assets/admin/images/login/fb-btn.svg"
-              />
-            </button>
-            <button className="google-login" onClick={signInWithGoogle}>
-              <img
-                alt="google-login-button"
-                src="//bizweb.dktcdn.net/assets/admin/images/login/gp-btn.svg"
-              />
-            </button>
+    <>
+      <Navbar user={user} handleSetUser={handleSetUser}></Navbar>
+      <div className="container">
+        <div className="page-login">
+          <div className="login-header">
+            <h3 className="text-center">Đăng nhập tài khoản</h3>
           </div>
-          <div className="form-login ">
-            <div className="form-group">
-              <label htmlFor="customer-email" className="p-dam">
-                Email
-                <span class="required">*</span>
-              </label>
-              <input
-                type="email"
-                className="form-control"
-                id="customer-email"
-                placeholder="Email"
-                onChange={(e) => setEmail(e.target.value)}
-              />
+          <div className="login">
+            <div className="social-login text-center">
+              <button className="facebook-login">
+                <img
+                  alt="facebook-login-button"
+                  src="//bizweb.dktcdn.net/assets/admin/images/login/fb-btn.svg"
+                />
+              </button>
+              <button className="google-login" onClick={signInWithGoogle}>
+                <img
+                  alt="google-login-button"
+                  src="//bizweb.dktcdn.net/assets/admin/images/login/gp-btn.svg"
+                />
+              </button>
             </div>
-            <div className="form-group">
-              <label htmlFor="customer-password" className="p-dam">
-                Mật khẩu
-                <span class="required">*</span>
-              </label>
-              <input
-                type="password"
-                className="form-control"
-                id="customer-password"
-                placeholder="Mật khẩu"
-                onChange={(e) => setPassword(e.target.value)}
-              />
+            <div className="form-login ">
+              <div className="form-group">
+                <label htmlFor="customer-email" className="p-dam">
+                  Email
+                  <span class="required">*</span>
+                </label>
+                <input
+                  type="email"
+                  className="form-control"
+                  id="customer-email"
+                  placeholder="Email"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="customer-password" className="p-dam">
+                  Mật khẩu
+                  <span class="required">*</span>
+                </label>
+                <input
+                  type="password"
+                  className="form-control"
+                  id="customer-password"
+                  placeholder="Mật khẩu"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="text-center login-button">
-          <button
-            type="button"
-            class="btn btn-outline-danger"
-            onClick={handleSignIn}
-          >
-            ĐĂNG NHẬP
-          </button>
-        </div>
-        <p className="text-center forgot-pass p-dam">Quên mật khẩu?</p>
-        <div className="register-text text-center">
-          Bạn chưa có tài khoản. Đăng ký
-          <div>
-            <Link
-              as={Link}
-              to="/register"
-              class="register-link"
-              aria-current="page"
-              href="#"
+          <div className="text-center login-button">
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              onClick={handleSignIn}
             >
-              tại đây.
-            </Link>
+              ĐĂNG NHẬP
+            </button>
+          </div>
+          <p className="text-center forgot-pass p-dam">Quên mật khẩu?</p>
+          <div className="register-text text-center">
+            Bạn chưa có tài khoản. Đăng ký
+            <div>
+              <Link
+                as={Link}
+                to="/register"
+                class="register-link"
+                aria-current="page"
+                href="#"
+              >
+                tại đây.
+              </Link>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -1,0 +1,337 @@
+.hot  {
+    position: relative;
+  }
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  .hot h2 {
+    margin-top: 20px;
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 22px;
+    display: inline-block;
+    height: 39px;
+    line-height: 39px;
+    position: relative;
+    font-weight: 500;
+    background-color: #f72b3f;
+    padding-left: 10px;
+  }
+  li {
+    list-style: none;
+  }
+  .hot .hr {
+    position: absolute;
+    width: 100%;
+    border: 1px solid red;
+    top: 56%;
+    z-index: -1;
+  }
+  .hot h2::after {
+    content: "";
+    top: 0;
+    right: -40px;
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-top: 19px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 41px solid #f72b3f;
+  }
+  section .carousel-item {
+    display: grid !important;
+    grid-template-columns: repeat(4,1fr);
+    gap: 10px;
+  }
+  .hot_products {
+    text-align: center;
+  }
+  .product-box {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    margin-top: 10px;
+  }
+  .price_hot {
+    display: flex;
+    justify-content: space-around;
+  }
+  .price_new {
+    color: #f72b3f;
+  }
+  .product-box button {
+    width: 100%;
+    padding: 5px;
+    background-color: #f72b3f;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    display: none;
+  }
+  
+  .btn_view button {
+    padding: 10px;
+    background-color: #f72b3f;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    margin-bottom: 10px;
+    margin-top: 30px;
+  }
+  .hovered button {
+    display: block;
+  }
+  /* Navbar.scss */
+  
+  .modal1 {
+    position: fixed;
+    display: none;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.7); /* Một lớp mờ đen để tạo nền */
+    transition: left 0.3s ease-in-out; /* Hiệu ứng trượt trong 0.3 giây */
+  }
+  .open {
+    display: block;
+  }
+  .list_menu {
+    z-index: 99999;
+    width: 70vw;
+    height: 100vh;
+    background-color: #f72b3f;
+  }
+
+  .nav-link {
+    color: #fff !important;
+  }
+
+  .navbar {
+    position: relative;
+}
+.header-bottom {
+  background-color: #f72b3f !important;
+}
+
+.logo img {
+  max-height: 45px;
+}
+.bottom-nav {
+  align-items: center;
+}
+.nav-item .active {
+  background-color: #f50920 !important;
+}
+.nav-item>a {
+  color: #fff;
+  font-size: 14px;
+  padding: 12px 14px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+  
+  @media screen and (max-width:740px) {
+    nav {
+      display: flex;
+      justify-content: space-between;
+      height: 50px;
+      align-items: center;
+      padding: 10px;
+    }
+    .header_top {
+      display: none;
+    }
+    .search_laptop {
+      display: none;
+    }
+    .cart_laptop {
+      display: none;
+    }
+    nav .logo {
+      width: 40%;
+    }
+  
+    nav i {
+      font-size: 1.2rem;
+      color: red;
+    }
+  
+    .search {
+      padding: 10px;
+      position: relative;
+    }
+  
+    .search input {
+      width: 100%;
+      padding: 5px 10px;
+      border-radius: 5px ;
+      border: 1px solid red;
+    }
+  
+    .search i {
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      /* Điều chỉnh khoảng cách của biểu tượng với phần trống bên phải */
+      transform: translateY(-50%);
+      color: red;
+    }
+  }
+.logout-container {
+display: flex;
+gap: 10px;
+}
+.logout-container button{
+  color: #f50920;
+}
+
+  @media screen and (min-width:741px) and (max-width:1024px) {
+  
+    nav {
+      display: flex;
+      justify-content: space-between;
+      height: 50px;
+      align-items: center;
+      padding: 10px;
+    }
+  
+    nav .logo {
+      width: 15%;
+    }
+  
+    nav i {
+      font-size: 1.2rem;
+      color: red;
+    }
+  
+    .search {
+      padding: 10px;
+      position: relative;
+    }
+    .search input {
+      width: 100%;
+      padding: 5px 10px;
+      border-radius: 5px ;
+      border: 1px solid red;
+    }
+  
+    .search i {
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      /* Điều chỉnh khoảng cách của biểu tượng với phần trống bên phải */
+      transform: translateY(-50%);
+      color: red;
+    }
+    .header_top {
+      display: none;
+    }
+    .search_laptop {
+      display: none;
+    }
+    .cart_laptop {
+      display: none;
+    }
+  }
+  @media screen and (min-width: 1025px) {
+      .menu {
+        display: none;
+      }
+      .cart {
+        display: none;
+      }
+      .search {
+        display: none;
+      }
+      nav {
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content:space-evenly;
+        .logo {
+          width: 20%;
+          height: 60%;
+        }
+      }
+      nav i {
+        font-size: 1.2rem;
+        color: red;
+      }
+  
+      .search_laptop {
+        padding: 10px;
+        position: relative;
+        width: 40vw;
+      }
+  
+      .search_laptop input {
+        width: 100%;
+        padding: 5px 10px;
+        border-radius: 5px ;
+        border: 1px solid red;
+      }
+  
+      .search_laptop i {
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        /* Điều chỉnh khoảng cách của biểu tượng với phần trống bên phải */
+        transform: translateY(-50%);
+        color: red;
+      }
+      .cart_laptop {
+  
+          button {
+            padding: 10px;
+            background-color: #f72b3f;
+            color: white;
+            border-radius: 5px;
+            border: none;
+          }
+          i {
+            color: white;
+          }
+      }
+     .header_top {
+      height: 40px;
+      background-color: black;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+             .hotline {
+              display: flex;
+              color: white;
+              height: 100%;
+              align-items: center;
+                  li {
+                    display: flex;
+                    height: 100%;
+                    padding: 0 10px;
+                    align-items: center;
+                     &:nth-child(2) {
+                      border-left: 1px solid rgb(171, 164, 164);
+                      border-right: 1px solid rgb(171, 164, 164);
+                     }
+                  }
+             }
+             .dangky {
+              display: flex;
+              color: white;
+              height: 100%;
+              align-items: center;
+              li {
+                display: flex;
+                height: 100%;
+                padding: 0 10px;
+                align-items: center;
+                &:nth-child(2) {
+                  border-left: 1px solid rgb(171, 164, 164);
+                  border-right: 1px solid rgb(171, 164, 164);
+                 }
+              }
+             }
+     }
+  }

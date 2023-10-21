@@ -1,0 +1,32 @@
+.modal-container {
+    display: flex;
+    gap: 10px;
+}
+
+.modal-left,
+.modal-right {
+    width: 50%;
+}
+
+.preview-container img {
+    width: 100%;
+}
+
+.option-category {
+    padding: 5px;
+    margin: 2px !important;
+}
+
+.product-img img {
+    width: 50px;
+}
+
+.product-name {
+    width: 20%;
+}
+
+td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
